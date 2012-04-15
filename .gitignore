@@ -1,0 +1,5 @@
+.cache/*
+!.cache/.keepme
+*.pyc
+.*.swp
+jsonp.js

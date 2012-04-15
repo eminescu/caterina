@@ -1,0 +1,72 @@
+<html>
+<head>
+    <script>
+        var autos, cases
+        function callback( o ){
+            autos = o.autos
+            cases = o.cases
+        }
+
+        var matches = {  }
+
+        function input(el){
+
+            //var html = []
+
+            matches[el.name] = []
+
+            if (el.value){
+                var r = new RegExp("\\b" + el.value, "i")
+                for (id in cases){
+                    var caze = cases[id]
+                    if ( ! r.test(caze.name) )
+                        continue
+                    
+                    matches[el.name].push( caze )
+                    //html.push( "<li>" + caze.name )
+                    //if (html.length > 10)
+                    //    break
+                }
+            }
+
+            var html = []
+
+            if (! matches.a || ! matches.b)
+                return
+
+            for (var i = 0; i < matches.a.length; ++i){
+                var cazea = matches.a[i]
+
+                for (var j = 0; j < matches.b.length; ++j){
+                    var cazeb = matches.b[j]
+
+                    if ( cazeb.auto == cazea.auto ){
+
+                        var auto = autos[ cazea.auto ]
+                        html.push( "<li><b>" + Math.abs(cazea.length - cazeb.length).toFixed(1) + "km</b> - " + cazea.name + " - " + cazeb.name + " - " + auto.name )
+                    }
+                    
+                }
+
+                if (html.length > 10)
+                    break
+                
+            }
+
+            //el.matches = matches
+            document.getElementById("ac").innerHTML = html.join("")
+        }
+
+    </script>
+    <script src="jsonp.js"></script>
+</head>
+<body>
+    <form>
+    <input name="a" oninput="input(this)">
+    <input name="b" oninput="input(this)">
+    </form>
+    <ul id="ac"></ul>
+    <script>input(document.forms[0].a)</script>
+    <script>input(document.forms[0].b)</script>
+</body>
+</html>
